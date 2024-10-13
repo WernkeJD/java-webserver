@@ -58,6 +58,8 @@ final class HttpRequest implements Runnable {
         // Read and print the request line and header lines.
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
         String requestLine = br.readLine();
+        System.out.println("Request:");
+        System.out.println("------------");
         System.out.println(requestLine);
 
     
@@ -84,13 +86,21 @@ final class HttpRequest implements Runnable {
         String entityBody = null;
         if (fileExists) {
             statusLine = "HTTP/1.1 200 OK" + CRLF;
-            contentTypeLine = "Content-type: " + contentType(fileName) + CRLF;
+            contentTypeLine = "Content-type: " + contentType(fileName) + CRLF;    
+            System.out.println("Response:");
+            System.out.println("-------------");
+            System.out.println(statusLine);
+            System.out.println(contentTypeLine);
         } else {
             statusLine = "HTTP/1.1 404 Not Found" + CRLF;;
             contentTypeLine = "Content-type: text/html" + CRLF;
             entityBody = "<HTML>" + 
                          "<HEAD><TITLE>Not Found</TITLE></HEAD>" +
                          "<BODY>Not Found</BODY></HTML>";
+            System.out.println("Response:");
+            System.out.println("-------------");
+            System.out.println(statusLine);
+            System.out.println(contentTypeLine);
         }
     
         // Send the status line.
