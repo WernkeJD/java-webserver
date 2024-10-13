@@ -1,3 +1,10 @@
+/**
+ * Assignment 1
+ * Jacob Wernke
+ **/
+import java.io.*;
+import java.net.*;
+import java.util.*;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStream;
@@ -14,7 +21,7 @@ final class HttpRequest implements Runnable {
         this.socket = socket;
     }
 
-    // Implement the run() method.
+    // Implement the run() method of the Runnable interface.
     public void run() {
         try {
             processRequest();
@@ -52,17 +59,19 @@ public final class WebServer {
         int port = 6789;
         
         // Establish the listen socket.
-        ServerSocket welcomeSocket = new ServerSocket(port);
+        ServerSocket user_socket = new ServerSocket(port);
 
+        //Process HTTP service requests in an infinite loop.
         while (true) {
             // Listen for a TCP connection request.
-            Socket connectionSocket = welcomeSocket.accept();
+            Socket accepted_socket = user_socket.accept();
 
             // Create an HttpRequest object to process the request.
-            HttpRequest request = new HttpRequest(connectionSocket);
+            HttpRequest request = new HttpRequest(accepted_socket);
 
             // Create a new thread to process the request.
             Thread thread = new Thread(request);
+            //Start the thread
             thread.start();
         }
     }
